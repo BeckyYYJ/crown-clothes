@@ -1,4 +1,4 @@
-import {Route,Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import CategoriesPreview from "../Categories-preview/Categories-preview.component";
 import Category from "../category/category.component";
 import {useEffect} from "react";
@@ -8,18 +8,18 @@ import {useDispatch} from "react-redux";
 
 const Shop = () => {
     const dispatch = useDispatch();
-    useEffect(()=>{
-        const getCM = async ()=>{
+    useEffect(() => {
+        const getCM = async () => {
             const categories = await getCategoriesAndDocuments();
             dispatch(setCategories(categories));
         };
         getCM();
-    },[]);
+    }, []);
     return (
         <>
             <Routes>
                 <Route element={<CategoriesPreview/>} index/>
-                <Route path=":category" element={<Category/>}/>
+                <Route path=':category' element={<Category/>}/>
             </Routes>
         </>)
 };

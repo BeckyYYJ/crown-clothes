@@ -3,10 +3,10 @@ import {useNavigate} from 'react-router-dom'
 const CategoryItem = ({category}) => {
     const {imageUrl, title} = category;
     const navigate = useNavigate();
-    const  navigateHandler = navigate(category.route);
+    const  navigateHandler = () => navigate(category.route);
     return (
         <div  className="categoryItem-container" onClick={navigateHandler}>
-            <div className="background-img"
+            <div className="background-image"
                  style={{
                 backgroundImage: `url(${imageUrl})`,
             }}/>
@@ -15,7 +15,6 @@ const CategoryItem = ({category}) => {
                 <p>Shop Now</p>
             </div>
         </div>
-
     )
 };
 

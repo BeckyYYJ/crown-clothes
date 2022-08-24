@@ -3,7 +3,8 @@ import {createUserDocumentFromAuth, createUserWithEP} from "../../utils/firebase
 import FormInput from "../form-input/form-input.component";
 import './sign-up.styles.scss'
 import Button from "../button/button.component";
-import {UserContext} from "../../contexts/user.context";
+// import {UserContext} from "../../contexts/user.context";
+import {useNavigate} from 'react-router-dom'
 
 const defaultFormFields = {
     displayName: '',
@@ -14,6 +15,7 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
     // const  {setUser} = useContext(UserContext);
+    const navigate = useNavigate();
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
     const resetFormFields = () => {
@@ -33,13 +35,17 @@ const SignUpForm = () => {
             return;
         }
         try {
-            const response = await createUserWithEP(email, password);
-            await createUserDocumentFromAuth(response, {displayName});
+            const {user} = await createUserWithEP(email, password);
+            await createUserDocumentFromAuth(user, {displayName});
+            alert('hello, '+displayName+' welcome to crown clothing');
+            navigate('/');
             // setUser(response);
         } catch (e) {
             if (e.code === 'auth/email-already-in-use') {
                 alert('Cannot create user, email already in use');
-            } else console.log('user create encountered an error', e);
+            }
+            else if(e.code==='auth/weak-password')        alert('Cannot create user, weak password');
+            else alert('user create encountered an error', e);
         }
     };
 

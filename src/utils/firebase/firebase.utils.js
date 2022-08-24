@@ -85,10 +85,11 @@ export const getCategoriesAndDocuments = async ()=>{
     //     return acc;
     // },{});
     const categoryMap = querySnapshot.docs.map((docSnapshot)=>(docSnapshot.data()));
-    // console.log(categoryMap);
     return categoryMap
 };
 export const createUserDocumentFromAuth = async (userAuth,additionalInformation={}) =>{
+    if (!userAuth) return;
+    // console.log(userAuth.uid);
     const userDocRef = doc(db,'users',userAuth.uid);//reference，指向这个doc的地址，即使里面是空的
     const userSnapshot = await getDoc(userDocRef);
     //在您首次向文档添加数据时，Cloud Firestore 就会隐式创建集合和文档。

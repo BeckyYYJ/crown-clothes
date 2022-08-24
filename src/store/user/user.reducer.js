@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 };
 
 export const userReducer = (state=INITIAL_STATE,action={}) =>{
+    console.log(state);
     const {type,payload} = action;
     switch (type) {
         case USER_ACTION_TYPES.SET_CURRENT_USER:
@@ -13,6 +14,6 @@ export const userReducer = (state=INITIAL_STATE,action={}) =>{
                 currentUser: payload
             };
         default:
-            throw new Error(`unhandled type ${type} in userReducer`);
+            return state;
     }
 };

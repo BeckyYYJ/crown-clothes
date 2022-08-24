@@ -3,12 +3,14 @@ import {useState} from "react";
 import Button from "../button/button.component";
 import './sign-in.styles.scss'
 import {createUserDocumentFromAuth, signInWithEP, signInWithGooglePopup} from "../../utils/firebase/firebase.utils";
+import {useNavigate} from 'react-router-dom'
 
 const defaultValue = {
     email: "",
     password: ""
 };
 const SignIn = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(defaultValue);
     const {email, password} = user;
     const reset = () => {
@@ -23,6 +25,10 @@ const SignIn = () => {
         e.preventDefault();
         try {
             const response = await signInWithEP(email, password);
+            if(response)
+            {
+                navigate('/');}
+
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
@@ -37,8 +43,15 @@ const SignIn = () => {
         }
     };
     const logGoogleUser = async () => {
-        const response = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(response);
+        try {
+            const res = await signInWithGooglePopup();
+            console.log(res);
+            if (res) navigate('/');
+        }
+        catch (e) {
+            console.log(e.code);
+        }
+        // await createUserDocumentFromAuth(response);
     };
 
     return (

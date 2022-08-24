@@ -1,5 +1,5 @@
 import {Outlet, Link} from 'react-router-dom'
-import {Fragment, useContext, useState} from 'react'
+import {Fragment, useState} from 'react'
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
 import './navigation.styles.scss'
 // import {UserContext} from "../../contexts/user.context";
@@ -9,7 +9,7 @@ import CartDropdown from "../../component/cart-dropdown/cart-dropdown.component"
 import {useSelector} from 'react-redux';
 
 const Navigation = () => {
-    const user = useSelector((state => state.user.currentUser));
+    const user = useSelector(state=>state.user.currentUser);
     const [cartState,setCartState] = useState(false);
     // const {user} = useContext(UserContext);
     const signOutHandler = async ()=>{
